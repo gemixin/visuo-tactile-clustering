@@ -1,5 +1,7 @@
 data/
+venv/
 __pycache__/
 *.pyc
 thumbnails/
-plots/
+basic_plots/
+ml_plots/
