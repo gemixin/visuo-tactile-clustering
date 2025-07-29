@@ -1,38 +1,19 @@
 import cluster_functions
-import cv2
-import os
+import data_functions
 import numpy as np
 
 '''
 This script:
 1. Reads tactile images from a data folder in grayscale
-2. Applies very basic flattening to the images
+2. Flattens the images into 1D arrays for clustering
 3. Uses PCA and/or t-SNE to reduce the dimensionality of the images
-4. Visualises the t-SNE results with labels and colors
+4. Visualises the results with labels and colors
 '''
 
-# List to hold images and their corresponding labels
-labels = []
-images = []
-
-# Read in images from data folder and store them in a list
-# Get all subfolders from data folder
-data_folder = 'data'
-subfolders = [f.path for f in os.scandir(data_folder) if f.is_dir()]
-# Iterate through each subfolder
-for subfolder in subfolders:
-    # Get all images in the subfolder
-    for filename in os.listdir(subfolder):
-        if filename.endswith('.jpg') or filename.endswith('.png'):
-
-            image = cv2.imread(os.path.join(subfolder, filename), cv2.IMREAD_GRAYSCALE)
-            if image is not None:
-                # Append the image to the list
-                images.append(image)
-                # Append the label (subfolder name) to the labels list
-                labels.append(os.path.basename(subfolder))
-
-# Use t-SNE to reduce the dimensionality of the images
+# Read images and labels from the data folder
+print('Processing tactile images...')
+images, labels = data_functions.read_data_folder('data', grayscale=True)
+# Flatten the images for PCA/t-SNE
 images_flat = np.array([img.flatten() for img in images])
 
 # PCA

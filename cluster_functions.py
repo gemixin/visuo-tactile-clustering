@@ -22,8 +22,10 @@ FIXED_COLORS = ['#e41a1c', '#4daf4a', '#377eb8']
 def get_lighter_color(hex_color):
     '''
     Generate a lighter shade of a given hex color.
-    :param hex_color: Base color in hex format.
-    :return: Lighter shade of the base color in hex format.
+    Args:
+        hex_color (str): Base color in hex format.
+    Returns:
+        str: Lighter shade of the base color in hex format.
     '''
     rgb = to_rgb(hex_color)
     h, l, s = colorsys.rgb_to_hls(*rgb)
@@ -35,8 +37,10 @@ def get_lighter_color(hex_color):
 def get_darker_color(hex_color):
     '''
     Generate a darker shade of a given hex color.
-    :param hex_color: Base color in hex format.
-    :return: Darker shade of the base color in hex format.
+    Args:
+        hex_color (str): Base color in hex format.
+    Returns:
+        str: Darker shade of the base color in hex format.
     '''
     rgb = to_rgb(hex_color)
     h, l, s = colorsys.rgb_to_hls(*rgb)
@@ -48,8 +52,10 @@ def get_darker_color(hex_color):
 def get_color_map(labels):
     '''
     Create a color map for labels based on their main categories.
-    :param labels: List of labels.
-    :return: Dictionary mapping labels to colors.
+    Args:
+        labels (list): List of labels.
+    Returns:
+        dict: Dictionary mapping labels to colors.
     '''
     color_map = {}
     # For each label
@@ -71,9 +77,11 @@ def get_color_map(labels):
 def pca_reduce(features, random_state):
     '''
     Reduce dimensionality of features using PCA.
-    :param features: List or array of features to reduce.
-    :param random_state: Random state for reproducibility.
-    :return: 2D array of PCA reduced features.
+    Args:
+        features (array-like): List or array of features to reduce.
+        random_state (int): Random state for reproducibility.
+    Returns:
+        ndarray: 2D array of PCA reduced features.
     '''
     pca = PCA(n_components=2, random_state=random_state)
     return pca.fit_transform(features)
@@ -82,9 +90,11 @@ def pca_reduce(features, random_state):
 def perform_tsne(features, random_state):
     '''
     Perform t-SNE on the given features.
-    :param features: List or array of features to reduce.
-    :param random_state: Random state for reproducibility.
-    :return: 2D array of t-SNE transformed features.
+    Args:
+        features (array-like): List or array of features to reduce.
+        random_state (int): Random state for reproducibility.
+    Returns:
+        ndarray: 2D array of t-SNE transformed features.
     '''
     tsne = TSNE(n_components=2, random_state=random_state)
     return tsne.fit_transform(features)
@@ -92,14 +102,17 @@ def perform_tsne(features, random_state):
 
 def plot_labels_2d(type, features_2d, labels, silhouette=True, save=False):
     '''
-    Plot all labels of all objects in a 2D space.
-    Each object has its own main colour.
+    Plot all labels of all objects in a 2D space. Each object has its own main colour.
     Each of the 3 sublabels for each object has a different shade of the main color.
-    :param type: PCA or t-SNE
-    :param features_2d: 2D array of features to plot.
-    :param labels: List of labels corresponding to each feature.
-    :param silhouette: Boolean indicating whether to compute silhouette score.
-    :param save: Boolean indicating whether to save the plot.
+    Prints silhouette score for all labels.
+    Args:
+        type (str): 'PCA' or 't-SNE'.
+        features_2d (ndarray): 2D array of features to plot.
+        labels (list): List of labels corresponding to each feature.
+        silhouette (bool): Whether to compute silhouette score.
+        save (bool): Whether to save the plot.
+    Returns:
+        None
     '''
     # Get unique labels and create a color map
     sorted_labels = sorted(set(labels))
@@ -131,8 +144,8 @@ def plot_labels_2d(type, features_2d, labels, silhouette=True, save=False):
 
     # Save the plot if requested
     if save:
-        plt.savefig(f'{type}_labels_plot.png')
-        print(f'Plot saved as {type}_labels_plot.png.')
+        plt.savefig(f'plots/{type}_labels_plot.png')
+        print(f'Plot saved as plots/{type}_labels_plot.png.')
 
     # Adjust layout and show the plot
     plt.tight_layout()
@@ -143,12 +156,15 @@ def plot_objects_2d(type, features_2d, labels, silhouette=True, save=False):
     '''
     Plot each object and its 3 sublabels in its own 2D space.
     Each object uses a fixed red, green, blue color for labelling.
-    Also print the silhouette score for each main class.
-    :param type: PCA or t-SNE
-    :param features_2d: 2D array of features to plot.
-    :param labels: List of labels corresponding to each feature.
-    :param silhouette: Boolean indicating whether to compute silhouette scores.
-    :param save: Boolean indicating whether to save the plot.
+    Prints the silhouette score for each main class.
+    Args:
+        type (str): 'PCA' or 't-SNE'.
+        features_2d (ndarray): 2D array of features to plot.
+        labels (list): List of labels corresponding to each feature.
+        silhouette (bool): Whether to compute silhouette scores.
+        save (bool): Whether to save the plot.
+    Returns:
+        None
     '''
     # Get unique labels and main labels
     sorted_labels = sorted(set(labels))
@@ -193,8 +209,8 @@ def plot_objects_2d(type, features_2d, labels, silhouette=True, save=False):
     fig.delaxes(axes[5])
     # Save the plot if requested
     if save:
-        plt.savefig(f'{type}_objects_plot.png')
-        print(f'Plot saved as {type}_objects_plot.png.')
+        plt.savefig(f'plots/{type}_objects_plot.png')
+        print(f'Plot saved as plots/{type}_objects_plot.png.')
 
     # Adjust layout and show the plot
     plt.tight_layout()
