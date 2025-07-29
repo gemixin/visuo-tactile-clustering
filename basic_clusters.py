@@ -1,7 +1,15 @@
-import tsne_functions
+import cluster_functions
 import cv2
 import os
 import numpy as np
+
+'''
+This script:
+1. Reads tactile images from a data folder in grayscale
+2. Applies very basic flattening to the images
+3. Uses PCA and/or t-SNE to reduce the dimensionality of the images
+4. Visualises the t-SNE results with labels and colors
+'''
 
 # List to hold images and their corresponding labels
 labels = []
@@ -27,9 +35,16 @@ for subfolder in subfolders:
 # Use t-SNE to reduce the dimensionality of the images
 images_flat = np.array([img.flatten() for img in images])
 
-# Perform t-SNE
-features_2d = tsne_functions.perform_tsne(images_flat)
-
+# PCA
+print('Performing PCA...')
+features_2d = cluster_functions.pca_reduce(images_flat, 42)
 # Plot the results
-tsne_functions.plot_labels_2d(features_2d, labels)
-tsne_functions.plot_objects_2d(features_2d, labels)
+cluster_functions.plot_labels_2d('PCA', features_2d, labels, save=True)
+cluster_functions.plot_objects_2d('PCA', features_2d, labels, save=True)
+
+# t-SNE
+print('Performing t-SNE...')
+features_2d = cluster_functions.perform_tsne(images_flat, 42)
+# Plot the results
+cluster_functions.plot_labels_2d('t-SNE', features_2d, labels, save=True)
+cluster_functions.plot_objects_2d('t-SNE', features_2d, labels, save=True)
