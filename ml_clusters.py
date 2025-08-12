@@ -107,19 +107,26 @@ def main():
     print(f"Feature vector size: {features.shape[1]}")
     print(f"Object types found: {set(labels)}")
 
-    # PCA
-    print('Performing PCA...')
-    features_2d = cluster_functions.pca_reduce(features, 42)
-    # Plot the results
-    cluster_functions.plot_labels_2d('PCA', 'ml_plots', features_2d, labels, save=True)
-    cluster_functions.plot_objects_2d('PCA', 'ml_plots', features_2d, labels, save=True)
+    # # PCA
+    # print('Performing PCA...')
+    # features_2d = cluster_functions.pca_reduce(features, 42)
+    # # Plot the results
+    # cluster_functions.plot_labels_2d('PCA', 'ml_plots', features_2d, labels, save=True)
+    # cluster_functions.plot_objects_2d('PCA', 'ml_plots', features_2d, labels, save=True)
 
-    # t-SNE
-    print('Performing t-SNE...')
-    features_2d = cluster_functions.perform_tsne(features, 42)
+    # # t-SNE
+    # print('Performing t-SNE...')
+    # features_2d = cluster_functions.perform_tsne(features, 42)
+    # # Plot the results
+    # cluster_functions.plot_labels_2d('t-SNE', 'ml_plots', features_2d, labels, save=True)
+    # cluster_functions.plot_objects_2d('t-SNE', 'ml_plots', features_2d, labels, save=True)
+
+    # UMAP
+    print('Performing UMAP...')
+    features_2d = cluster_functions.perform_umap(features, 42)
     # Plot the results
-    cluster_functions.plot_labels_2d('t-SNE', 'ml_plots', features_2d, labels, save=True)
-    cluster_functions.plot_objects_2d('t-SNE', 'ml_plots', features_2d, labels, save=True)
+    cluster_functions.plot_labels_2d('UMAP', 'ml_plots', features_2d, labels, save=True)
+    cluster_functions.plot_objects_2d('UMAP', 'ml_plots', features_2d, labels, save=True)
 
     # # Apply t-SNE and visualize
     # tsne_results = visualize_tsne_clusters(features, labels)

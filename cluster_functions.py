@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgb, to_hex
 import colorsys
 from sklearn.manifold import TSNE
+import umap
 
 # Define base colors for main categories
 BASE_COLORS = {
@@ -100,13 +101,26 @@ def perform_tsne(features, random_state):
     return tsne.fit_transform(features)
 
 
+def perform_umap(features, random_state):
+    '''
+    Perform UMAP on the given features to reduce to 2 components.
+    Args:
+        features (array-like): List or array of features to reduce.
+        random_state (int): Random state for reproducibility.
+    Returns:
+        ndarray: 2D array of UMAP transformed features.
+    '''
+    reducer = umap.UMAP(n_components=2, random_state=random_state)
+    return reducer.fit_transform(features)
+
+
 def plot_labels_2d(type, dir, features_2d, labels, silhouette=True, save=False):
     '''
     Plot all labels of all objects in a 2D space. Each object has its own main colour.
     Each of the 3 sublabels for each object has a different shade of the main color.
     Prints silhouette score for all labels.
     Args:
-        type (str): 'PCA' or 't-SNE'.
+        type (str): 'PCA', 't-SNE' or 'UMAP'.
         dir (str): Directory to save the plots.
         features_2d (ndarray): 2D array of features to plot.
         labels (list): List of labels corresponding to each feature.
@@ -159,7 +173,7 @@ def plot_objects_2d(type, dir, features_2d, labels, silhouette=True, save=False)
     Each object uses a fixed red, green, blue color for labelling.
     Prints the silhouette score for each main class.
     Args:
-        type (str): 'PCA' or 't-SNE'.
+        type (str): 'PCA', 't-SNE' or 'UMAP'.
         dir (str): Directory to save the plots.
         features_2d (ndarray): 2D array of features to plot.
         labels (list): List of labels corresponding to each feature.

@@ -16,19 +16,25 @@ images, labels = data_functions.read_data_folder('data', grayscale=True)
 # Flatten the images for PCA/t-SNE
 images_flat = np.array([img.flatten() for img in images])
 
-print(images_flat.shape)  # Check the shape of the features
-print(images_flat[:5])
+random_state = 42  # For reproducibility
 
 # PCA
 print('Performing PCA...')
-features_2d = cluster_functions.pca_reduce(images_flat, 42)
+features_2d = cluster_functions.pca_reduce(images_flat, random_state)
 # Plot the results
 cluster_functions.plot_labels_2d('PCA', 'basic_plots', features_2d, labels, save=True)
 cluster_functions.plot_objects_2d('PCA', 'basic_plots', features_2d, labels, save=True)
 
 # t-SNE
 print('Performing t-SNE...')
-features_2d = cluster_functions.perform_tsne(images_flat, 42)
+features_2d = cluster_functions.perform_tsne(images_flat, random_state)
 # Plot the results
 cluster_functions.plot_labels_2d('t-SNE', 'basic_plots', features_2d, labels, save=True)
 cluster_functions.plot_objects_2d('t-SNE', 'basic_plots', features_2d, labels, save=True)
+
+# UMAP
+print('Performing UMAP...')
+features_2d = cluster_functions.perform_umap(images_flat, random_state)
+# Plot the results
+cluster_functions.plot_labels_2d('UMAP', 'basic_plots', features_2d, labels, save=True)
+cluster_functions.plot_objects_2d('UMAP', 'basic_plots', features_2d, labels, save=True)
