@@ -29,19 +29,19 @@ print(f"Object types found: {set(labels)}")
 print('Performing PCA...')
 features_2d = cluster_functions.pca_reduce(features, 42)
 # Plot the results
-cluster_functions.plot_labels_2d('PCA', 'plots/ml', features_2d, labels, save=True)
-cluster_functions.plot_objects_2d('PCA', 'plots/ml', features_2d, labels, save=True)
+cluster_functions.plot_labels_2d('PCA', 'plots/ml', features_2d, labels)
+cluster_functions.plot_objects_2d('PCA', 'plots/ml', features_2d, labels)
 
 # t-SNE
 print('Performing t-SNE...')
 features_2d = cluster_functions.perform_tsne(features, 42)
 # Plot the results
-cluster_functions.plot_labels_2d('t-SNE', 'plots/ml', features_2d, labels, save=True)
-cluster_functions.plot_objects_2d('t-SNE', 'plots/ml', features_2d, labels, save=True)
+cluster_functions.plot_labels_2d('t-SNE', 'plots/ml', features_2d, labels)
+cluster_functions.plot_objects_2d('t-SNE', 'plots/ml', features_2d, labels)
 
 # UMAP
 print('Performing UMAP...')
 features_2d = cluster_functions.perform_umap(features, 42)
 # Plot the results
-cluster_functions.plot_labels_2d('UMAP', 'plots/ml', features_2d, labels, save=True)
-cluster_functions.plot_objects_2d('UMAP', 'plots/ml', features_2d, labels, save=True)
+cluster_functions.plot_labels_2d('UMAP', 'plots/ml', features_2d, labels)
+cluster_functions.plot_objects_2d('UMAP', 'plots/ml', features_2d, labels)
