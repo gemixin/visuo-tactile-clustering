@@ -9,7 +9,7 @@
 - Cluster tactile data to explore how different object parts group together.
 - Evaluate clustering quality using visualisations and silhouette scores.
 
-<img src="plots/ml/UMAP_labels_plot.png" alt="Example clustering result" width="600"/>
+![Example clustering result](plots/ml/UMAP_labels_plot.png)
 
 The example dataset was collected using a [DIGIT](https://digit.ml/) tactile sensor, capturing interactions with 5 different objects. For each object, 20 tactile images were recorded from 3 distinct parts, enabling analysis of how well the clustering methods can distinguish between object parts based on tactile features.
 
@@ -81,7 +81,7 @@ python3 ml_clusters.py
 ## Data
 The following 5 objects were used for the example dataset: a Pringles tube, a banana, a hammer, a tennis ball and a tin of beans.
 
-<img src="images/all_objects.JPG" alt="Selected objects" width="600"/>
+![Selected objects](images/all_objects.JPG)
 
 ## Analysis
 Clustering performance is weak with the example dataset, which is expected due to the small sample size and high intra-object variance. Additionally, the machine learning feature extraction model is not trained on tactile images, which may further limit clustering quality.
