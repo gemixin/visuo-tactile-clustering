@@ -1,3 +1,11 @@
+"""
+A collection of reusable functions for clustering and visualising the data.
+
+Author: Gemma McLean
+Date: August 2025
+"""
+
+import os
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import LabelEncoder
@@ -21,43 +29,59 @@ FIXED_COLORS = ['#e41a1c', '#4daf4a', '#377eb8']
 
 
 def get_lighter_color(hex_color):
-    '''
+    """
     Generate a lighter shade of a given hex color.
+
     Args:
         hex_color (str): Base color in hex format.
+
     Returns:
         str: Lighter shade of the base color in hex format.
-    '''
+    """
+
+    # Convert to HLS
     rgb = to_rgb(hex_color)
     h, l, s = colorsys.rgb_to_hls(*rgb)
-    new_l = min(l + 0.2, 1.0)  # Ensure lightness does not exceed 1.0
+    # Increase lightness (ensuring it does not exceed 1.0)
+    new_l = min(l + 0.2, 1.0)
+    # Convert back to RGB
     new_rgb = colorsys.hls_to_rgb(h, new_l, s)
     return to_hex(new_rgb)
 
 
 def get_darker_color(hex_color):
-    '''
+    """
     Generate a darker shade of a given hex color.
+
     Args:
         hex_color (str): Base color in hex format.
+
     Returns:
         str: Darker shade of the base color in hex format.
-    '''
+    """
+
+    # Convert to HLS
     rgb = to_rgb(hex_color)
     h, l, s = colorsys.rgb_to_hls(*rgb)
-    new_l = max(l - 0.2, 0.0)  # Ensure lightness does not go below 0.0
+    # Decrease lightness (ensuring it does not go below 0.0)
+    new_l = max(l - 0.2, 0.0)
+    # Convert back to RGB
     new_rgb = colorsys.hls_to_rgb(h, new_l, s)
     return to_hex(new_rgb)
 
 
 def get_color_map(labels):
-    '''
+    """
     Create a color map for labels based on their main categories.
+
     Args:
         labels (list): List of labels.
+
     Returns:
         dict: Dictionary mapping labels to colors.
-    '''
+    """
+
+    # Create an empty color map
     color_map = {}
     # For each label
     for i, sub in enumerate(labels):
@@ -76,49 +100,59 @@ def get_color_map(labels):
 
 
 def pca_reduce(features, random_state):
-    '''
-    Reduce dimensionality of features using PCA.
+    """
+    Perform PCA on the given features to reduce to 2 components.
+
     Args:
         features (array-like): List or array of features to reduce.
         random_state (int): Random state for reproducibility.
+
     Returns:
         ndarray: 2D array of PCA reduced features.
-    '''
+    """
+
     pca = PCA(n_components=2, random_state=random_state)
     return pca.fit_transform(features)
 
 
 def perform_tsne(features, random_state):
-    '''
-    Perform t-SNE on the given features.
+    """
+    Perform t-SNE on the given features to reduce to 2 components.
+
     Args:
         features (array-like): List or array of features to reduce.
         random_state (int): Random state for reproducibility.
+
     Returns:
         ndarray: 2D array of t-SNE transformed features.
-    '''
+    """
+
     tsne = TSNE(n_components=2, random_state=random_state)
     return tsne.fit_transform(features)
 
 
 def perform_umap(features, random_state):
-    '''
+    """
     Perform UMAP on the given features to reduce to 2 components.
+
     Args:
         features (array-like): List or array of features to reduce.
         random_state (int): Random state for reproducibility.
+
     Returns:
         ndarray: 2D array of UMAP transformed features.
-    '''
+    """
+
     reducer = umap.UMAP(n_components=2, random_state=random_state)
     return reducer.fit_transform(features)
 
 
 def plot_labels_2d(type, dir, features_2d, labels, silhouette=True, save=False):
-    '''
+    """
     Plot all labels of all objects in a 2D space. Each object has its own main colour.
     Each of the 3 sublabels for each object has a different shade of the main color.
     Prints silhouette score for all labels.
+
     Args:
         type (str): 'PCA', 't-SNE' or 'UMAP'.
         dir (str): Directory to save the plots.
@@ -126,9 +160,8 @@ def plot_labels_2d(type, dir, features_2d, labels, silhouette=True, save=False):
         labels (list): List of labels corresponding to each feature.
         silhouette (bool): Whether to compute silhouette score.
         save (bool): Whether to save the plot.
-    Returns:
-        None
-    '''
+    """
+
     # Get unique labels and create a color map
     sorted_labels = sorted(set(labels))
     color_map = get_color_map(sorted_labels)
@@ -159,6 +192,10 @@ def plot_labels_2d(type, dir, features_2d, labels, silhouette=True, save=False):
 
     # Save the plot if requested
     if save:
+        # If the directory does not exist, create it
+        if not os.path.exists(dir):
+            os.makedirs(dir, exist_ok=True)
+        # Save plot
         plt.savefig(f'{dir}/{type}_labels_plot.png')
         print(f'Plot saved as {dir}/{type}_labels_plot.png.')
 
@@ -168,10 +205,11 @@ def plot_labels_2d(type, dir, features_2d, labels, silhouette=True, save=False):
 
 
 def plot_objects_2d(type, dir, features_2d, labels, silhouette=True, save=False):
-    '''
+    """
     Plot each object and its 3 sublabels in its own 2D space.
     Each object uses a fixed red, green, blue color for labelling.
     Prints the silhouette score for each main class.
+
     Args:
         type (str): 'PCA', 't-SNE' or 'UMAP'.
         dir (str): Directory to save the plots.
@@ -179,9 +217,8 @@ def plot_objects_2d(type, dir, features_2d, labels, silhouette=True, save=False)
         labels (list): List of labels corresponding to each feature.
         silhouette (bool): Whether to compute silhouette scores.
         save (bool): Whether to save the plot.
-    Returns:
-        None
-    '''
+    """
+
     # Get unique labels and main labels
     sorted_labels = sorted(set(labels))
     main_labels = list(BASE_COLORS.keys())
@@ -225,6 +262,10 @@ def plot_objects_2d(type, dir, features_2d, labels, silhouette=True, save=False)
     fig.delaxes(axes[5])
     # Save the plot if requested
     if save:
+        # If the directory does not exist, create it
+        if not os.path.exists(dir):
+            os.makedirs(dir, exist_ok=True)
+        # Save plot
         plt.savefig(f'{dir}/{type}_objects_plot.png')
         print(f'Plot saved as {dir}/{type}_objects_plot.png.')
 
