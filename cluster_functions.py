@@ -194,7 +194,7 @@ def plot_labels_2d(type, save_dir, features_2d, labels, silhouette=True):
     if not os.path.exists(save_dir):
         os.makedirs(save_dir, exist_ok=True)
     # Save plot
-    plt.savefig(f'{save_dir}/{type}_labels_plot.png')
+    plt.savefig(f'{save_dir}/{type}_labels_plot.png', dpi=300, bbox_inches='tight')
     print(f'Plot saved as {save_dir}/{type}_labels_plot.png.')
 
     # Adjust layout and show the plot
@@ -262,7 +262,7 @@ def plot_objects_2d(type, save_dir, features_2d, labels, silhouette=True):
     if not os.path.exists(save_dir):
         os.makedirs(save_dir, exist_ok=True)
     # Save plot
-    plt.savefig(f'{save_dir}/{type}_objects_plot.png')
+    plt.savefig(f'{save_dir}/{type}_objects_plot.png', dpi=300, bbox_inches='tight')
     print(f'Plot saved as {save_dir}/{type}_objects_plot.png.')
 
     # Adjust layout and show the plot

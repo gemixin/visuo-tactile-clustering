@@ -1,0 +1,16 @@
+name: visuo-tactile-clustering
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10 # Tested with 3.10.12 but other versions should work
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - umap-learn
+  - opencv
+  - pillow
+  - pytorch
+  - torchvision
