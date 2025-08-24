@@ -215,8 +215,6 @@ def plot_objects_2d(type, save_dir, features_2d, labels):
         ax = axes[idx]
         # Get sublabels for the current main label
         sublist = [s for s in sorted_labels if s.startswith(main)]
-        all_indices = []
-        cluster_labels = []
         # For each sublabel, plot the points
         for i, sub in enumerate(sublist):
             # Cycle through fixed colors red, green, blue
@@ -225,9 +223,6 @@ def plot_objects_2d(type, save_dir, features_2d, labels):
             indices = [j for j, l in enumerate(labels) if l == sub]
             ax.scatter(features_2d[indices, 0], features_2d[indices, 1],
                        label=sub, color=color, alpha=0.7)
-            # Collect indices and labels for silhouette score calculation
-            all_indices.extend(indices)
-            cluster_labels.extend([i] * len(indices))
 
         # Set title and labels for the axis
         ax.set_title(f'{main.capitalize()} sublabels')
