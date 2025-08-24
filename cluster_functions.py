@@ -7,8 +7,6 @@ Date: August 2025
 
 import os
 from sklearn.decomposition import PCA
-from sklearn.metrics import silhouette_score
-from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgb, to_hex
 import colorsys
@@ -147,19 +145,16 @@ def perform_umap(features, random_state):
     return reducer.fit_transform(features)
 
 
-def plot_labels_2d(type, save_dir, features_2d, labels, silhouette=True):
+def plot_labels_2d(type, save_dir, features_2d, labels):
     """
     Plot all labels of all objects in a 2D space. Each object has its own main colour.
     Each of the 3 sublabels for each object has a different shade of the main color.
-    Prints silhouette score for all labels.
 
     Args:
         type (str): 'PCA', 't-SNE' or 'UMAP'.
         save_dir (str): Directory to save the plots.
         features_2d (ndarray): 2D array of features to plot.
         labels (list): List of labels corresponding to each feature.
-        silhouette (bool): Whether to compute silhouette score.
-        save (bool): Whether to save the plot.
     """
 
     # Get unique labels and create a color map
@@ -182,14 +177,6 @@ def plot_labels_2d(type, save_dir, features_2d, labels, silhouette=True):
     plt.ylabel(f'{type} component 2')
     plt.legend()
 
-    # Encode labels as numbers for silhouette score calculation
-    le = LabelEncoder()
-    cluster_labels = le.fit_transform(labels)
-    # Calculate silhouette score
-    if silhouette and len(set(cluster_labels)) > 1 and len(cluster_labels) > 1:
-        score = silhouette_score(features_2d, cluster_labels)
-        print(f'{type} Silhouette score for all labels: {score:.3f}')
-
     # If the save directory does not exist, create it
     if not os.path.exists(save_dir):
         os.makedirs(save_dir, exist_ok=True)
@@ -202,18 +189,16 @@ def plot_labels_2d(type, save_dir, features_2d, labels, silhouette=True):
     plt.show()
 
 
-def plot_objects_2d(type, save_dir, features_2d, labels, silhouette=True):
+def plot_objects_2d(type, save_dir, features_2d, labels):
     """
     Plot each object and its 3 sublabels in its own 2D space.
     Each object uses a fixed red, green, blue color for labelling.
-    Prints the silhouette score for each main class.
 
     Args:
         type (str): 'PCA', 't-SNE' or 'UMAP'.
         save_dir (str): Directory to save the plots.
         features_2d (ndarray): 2D array of features to plot.
         labels (list): List of labels corresponding to each feature.
-        silhouette (bool): Whether to compute silhouette scores.
     """
 
     # Get unique labels and main labels
@@ -249,11 +234,6 @@ def plot_objects_2d(type, save_dir, features_2d, labels, silhouette=True):
         ax.set_xlabel(f'{type} component 1')
         ax.set_ylabel(f'{type} component 2')
         ax.legend()
-
-        # Calculate silhouette score for this main class
-        if silhouette and len(set(cluster_labels)) > 1 and len(all_indices) > 1:
-            score = silhouette_score(features_2d[all_indices], cluster_labels)
-            print(f'{type} Silhouette score for {main}: {score:.3f}')
 
     # Hide the 6th subplot as unused
     fig.delaxes(axes[5])

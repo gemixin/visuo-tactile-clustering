@@ -7,7 +7,7 @@
 - Load and preprocess tactile images from a visuo-tactile sensor.
 - Extract features and perform dimensionality reduction (PCA, t-SNE, UMAP).
 - Cluster tactile data to explore how different object parts group together.
-- Evaluate clustering quality using visualisations and silhouette scores.
+- Evaluate clustering quality using visualisations.
 
 ![Example clustering result](plots/ml/UMAP_labels_plot.png)
 
@@ -67,13 +67,13 @@ python3 generate_thumbnails.py
 ```
 
 ### Basic Clusters
-Performs clustering on the tactile images using the basic approach (flattened pixel arrays), applies dimensionality reduction, and evaluates clustering quality. Outputs plots and silhouette scores.
+Performs clustering on the tactile images using the basic approach (flattened pixel arrays), applies dimensionality reduction, and evaluates clustering quality with plots.
 ```bash
 python3 basic_clusters.py
 ```
 
 ###  ML Clusters
-Performs clustering using the machine learning approach (feature extraction with a pre-trained model), applies dimensionality reduction, and evaluates clustering quality. Outputs plots and silhouette scores.
+Performs clustering using the machine learning approach (feature extraction with a pre-trained model), applies dimensionality reduction, and evaluates clustering quality with plots.
 ```bash
 python3 ml_clusters.py
 ```
