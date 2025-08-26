@@ -81,7 +81,7 @@ python3 ml_clusters.py
 ## Data
 The following 5 objects were used for the example dataset: a Pringles tube, a banana, a hammer, a tennis ball and a tin of beans.
 
-![Selected objects](images/all_objects.JPG)
+![Selected objects](images/all_objects.jpg)
 
 ## Analysis
 Clustering performance is weak with the example dataset, which is expected due to the small sample size and high intra-object variance. Additionally, the machine learning feature extraction model is not trained on tactile images, which may further limit clustering quality.
