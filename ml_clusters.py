@@ -25,23 +25,26 @@ print(f"Extracted features from {len(features)} images")
 print(f"Feature vector size: {features.shape[1]}")
 print(f"Object types found: {set(labels)}")
 
+# Set random state for reproducibility
+random_state = 42
+
 # PCA
 print('Performing PCA...')
-features_2d = cluster_functions.pca_reduce(features, 42)
+features_2d = cluster_functions.pca_reduce(features, random_state)
 # Plot the results
 cluster_functions.plot_labels_2d('PCA', 'plots/ml', features_2d, labels)
 cluster_functions.plot_objects_2d('PCA', 'plots/ml', features_2d, labels)
 
 # t-SNE
 print('Performing t-SNE...')
-features_2d = cluster_functions.perform_tsne(features, 42)
+features_2d = cluster_functions.perform_tsne(features, random_state)
 # Plot the results
 cluster_functions.plot_labels_2d('t-SNE', 'plots/ml', features_2d, labels)
 cluster_functions.plot_objects_2d('t-SNE', 'plots/ml', features_2d, labels)
 
 # UMAP
 print('Performing UMAP...')
-features_2d = cluster_functions.perform_umap(features, 42)
+features_2d = cluster_functions.perform_umap(features, random_state)
 # Plot the results
 cluster_functions.plot_labels_2d('UMAP', 'plots/ml', features_2d, labels)
 cluster_functions.plot_objects_2d('UMAP', 'plots/ml', features_2d, labels)
