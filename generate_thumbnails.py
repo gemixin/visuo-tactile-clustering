@@ -25,7 +25,7 @@ objects = [
 ]
 
 # Create the thumbnails
-print('Creating plots...')
+print('Creating thumbnails...')
 # Loop through each object category and its sublabels
 for main, sublabels in objects:
     print(f'Creating thumbnails for {main}...')
@@ -46,7 +46,7 @@ for main, sublabels in objects:
             ax.set_title(sub, fontsize=10)
             ax.axis('off')
     # Save the plot
-    plt.savefig(f'thumbnails/{main}_thumbnails.png')
+    plt.savefig(f'thumbnails/{main}_thumbnails.png', dpi=300, bbox_inches='tight')
     print(f'Plot saved as thumbnails/{main}_thumbnails.png.')
 
 print('Finished!')
