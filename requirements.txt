@@ -5,6 +5,6 @@ seaborn
 scikit-learn
 umap-learn
 opencv-python
-Pillow
+pillow
 torch
 torchvision
